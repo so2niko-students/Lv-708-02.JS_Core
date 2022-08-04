@@ -1,82 +1,107 @@
-//!Типи даних 
-/*
-Number
-String
-Boolean
+//Оператори
 
-null
-undefined
+//!По кількості операндів
+//унарні
+let a = 3;
++a;
+++a;
+a++;
+--a;
+a--;
+-a;
+typeof a;
+new Date();
+~a;
+!a;
+//...
 
-Object
+//бінарні
+a = 33;
+a += 3;
+a += 3;
+a += 3;
+a += 3;
+a += 3;
+a += 3;
+a * 3;
+a - 555;
+a + 4;
+a ** 3;
+true || false;
+true && false;
 
-Symbol
-BigInt
-*/
+//...
 
+//тернарні
+if(a == 3){
+    //alert('3');
+    ///
+}else{
+    //alert('not 3');
+}
 
-//? Копіювання по значенню
-let n1 = 100;
-let n2 = n1;
-n1 = 200;
+// a == 3 ? //alert('3') : //alert('not 3');
 
-console.log(n1, n2);//200, 100
+let age = ~~(Math.random() * 100);
+let ageName;
 
-//? Копіювання по посиланню
-const o1 = {
-    name : 'Nick'
-};
+if(age <= 20){
+    ageName = 'Падаван';
+}
 
-const o2 = o1;
+if(age > 20 && age <= 40){
+    ageName = 'Джедай';
+}
 
-o1.name = 'ne Nick';
+switch(age){
+    case 5 :
+    case 6 :
+    case 7 :
+    case 8 :
+    case 9 :
+    case 10 :
+    case 11 :
+    case 12 :
+    case 13 :
+    case 14 :
+    case 15 :
+    case 16 :
+    case 17 :
+    case 18 : {
+        //alert('sdlkfjasdl;kfjsd;');
+        break;
+    }
+    case 30 : {
+        //alert('Криза 1');
+        break;
+    }
+    case 40 : {
+        //alert('Криза 2');
+        break;
+    }
+    case 65 : {
+        //alert('Час купити мотоцикл');
+        break;
+    }
+}
 
-console.log(o1, o2);
-console.log(o1 === o2);
+switch(true){
+    case age <= 20 : {
+        ageName = 'Падаван';
+        break;
+    }
+    case age > 20 && age <= 40: {
+        ageName = 'Джедай';
+        break;
+    }
+}
 
-// let vs var
-var1 = 'hello';
-console.log(var1);
-var var1 = 'jsdklfjsdfds';
-console.log(var1);
+//Значення за замовчуванням
 
-// city = 'jjj';
+function show(text){
+    // text = text || 'Текст за замовчуванням';
+    text && console.log(text);
+}
 
-// let city;
-
-//let vs const
-const o3 = {
-    age : 100
-};
-
-o3.age = 34343;
-o3.n = 55;
-delete o3.age;
-
-//Рядки
-// "..." '...' `...`
-
-const r = "Hello, it is////////////////// a \"ROBOT\"";
-"Hello, it is a 'ROBOT'"
-
-console.log(r);
-
-//Шаблонні рядки
-//Template strings
-
-const greeting = `Hello ${ 5 * 6 - 9 + 22 }, my name is ${ o1.name }`;
-
-console.log(greeting);
-
-//Конкатенація 
-
-const s1 = 'Hell';
-const s2 = 'o';
-
-console.log(s1 + s2 + s1 + s2 + s1 + s1);
-console.log(`${ s1 + s2 }${ s2 }`);
-
-console.log('%cHello', 'color: red; padding: 25px; background-color: white;');
-
-// alert('Hello');
-// const n = prompt('Enter your name', 'Ivan');
-// const isHelp = confirm('Do you need a help?');
+show('hello');
+show();
