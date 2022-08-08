@@ -1,82 +1,65 @@
-//!Типи даних 
-/*
-Number
-String
-Boolean
+//!створення масиву
 
-null
-undefined
+//літеральний
+const names = ['Nick', 'Max', 'Serg'];
+//об'єктний
+const names2 = Array('Bohdan', 'Nataliia', 'Volodymyr');
+const el = Array(12);
+console.log(el);
 
-Object
+//!масив-то об'єкт
+names2.age = 200;
 
-Symbol
-BigInt
-*/
+console.log(names2);
 
+//!Методи масиву
 
-//? Копіювання по значенню
-let n1 = 100;
-let n2 = n1;
-n1 = 200;
+//forEach
 
-console.log(n1, n2);//200, 100
+//map
 
-//? Копіювання по посиланню
-const o1 = {
-    name : 'Nick'
-};
+//filter
 
-const o2 = o1;
+//reduce
 
-o1.name = 'ne Nick';
+//some
 
-console.log(o1, o2);
-console.log(o1 === o2);
+//every
 
-// let vs var
-var1 = 'hello';
-console.log(var1);
-var var1 = 'jsdklfjsdfds';
-console.log(var1);
+//!delete
+delete names[0];
 
-// city = 'jjj';
+console.log(names);
 
-// let city;
+//! маніпулювання length
+const n = [1,2,3,4,5,6,7,8,9,10];
+console.log(n);
+// n.length = 3;
+// console.log(n);
+// n.length = 10;
+// console.log(n);
 
-//let vs const
-const o3 = {
-    age : 100
-};
+//! slice/splice
+// const sp1 = n.splice(2, 3);//Вирізання елементів
+// n.splice(2, 0, 77, 88);//додаю дані у середину масиву
+// const sp1 = n.splice(2, 3, 22, 33, 44, 55, 66, 77);
+const sl1 = n.slice(2, 6);//від 2 до 6 не включно
+const sl2 = n.slice(3);//до кінця
+const sl3 = n.slice(2, -2);
+const sl4 = n.slice(-4);
+console.log(sl4);
 
-o3.age = 34343;
-o3.n = 55;
-delete o3.age;
+//! Заповнення
+// n.fill('Hello', 2, 5);
+// console.log(n);
+// console.log(sp1);
 
-//Рядки
-// "..." '...' `...`
-
-const r = "Hello, it is////////////////// a \"ROBOT\"";
-"Hello, it is a 'ROBOT'"
-
-console.log(r);
-
-//Шаблонні рядки
-//Template strings
-
-const greeting = `Hello ${ 5 * 6 - 9 + 22 }, my name is ${ o1.name }`;
-
-console.log(greeting);
-
-//Конкатенація 
-
-const s1 = 'Hell';
-const s2 = 'o';
-
-console.log(s1 + s2 + s1 + s2 + s1 + s1);
-console.log(`${ s1 + s2 }${ s2 }`);
-
-console.log('%cHello', 'color: red; padding: 25px; background-color: white;');
-
-// alert('Hello');
-// const n = prompt('Enter your name', 'Ivan');
-// const isHelp = confirm('Do you need a help?');
+//! join/split
+// const s1 = n.join('собака');
+// console.log(s1);
+// const n2 = s1.split('собака');
+// const n3 = s1.split('');
+// console.log(n3);
+// const s2 = 'додаю дані у середину масиву';
+// const n4 = s2.split(' ');
+// console.log(n4);

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Paint Cans Calculator</title>
+</head>
+<body>
+  <form>
+    length: <input type="number" name="length" id="length" min="1" max="1000" required><br>
+    weight: <input type="number" name="weight" id="weight" min="1" max="1000" required><br>
+    height: <input type="number" name="height" id="height" min="1" max="1000" required><br>
+    <button type="button" class="btn-calc">Get Cans Count</button>
+  </form>
+  <script>
+    // У функцію я можу як передати аргументи, використовуючи ід так і взяти самостійно ці елемнти
+    // з середени функції так само по ід. Який підхід краще і чому?
+    const room = {
+      l : document.getElementById('length'),
+      w : document.getElementById('weight'),
+      h : document.getElementById('height')
+    }
+
+    document.querySelector('.btn-calc').addEventListener('click', () => getNumberOfPaintCans(room.l.value, room.w.value, room.h.value));
+
+    function getNumberOfPaintCans(length, weight, height){
+      const paintingOfOneCan = 16;
+
+      if(!length || !weight || !height) {
+        return alert("You should add all parameters");
+      }// Як ще можна перевірити чи приходять дані в аргументи?  Перевірка на null не працює.
+      if(length > 1000 || weight > 1000 || height > 1000) {
+        return alert("The parameter should be less than 1000");
+      }
+
+      let calculatedArea = ((length * 2 ) + (weight * 2)) * height;
+      let numberOfCans = calculatedArea/paintingOfOneCan;
+
+      alert(Math.ceil(numberOfCans));
+    }
+  </script>
+</body>
+</html>
