@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #insertClockHere, #insertDateHere{
+            position: fixed;
+            right: 0px;
+            font-family: sans-serif;
+            font-size: 25px;
+            padding: 2%;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "insertClockHere"></div>
+
+    <script>
+        /* 3. Напишіть програму, яка раз на секунду додає на екран квадрат випадкового кольору. 
+        На екрані виділіть область розміром 600 на 600. Розділіть область на квадрати по 60 пікселів. 
+        Раз на секунду в одній із областей(випадково) з'являється квадрат випадкового кольору. 
+        Коли всі області (100 квадратів - 100 секунд) заповняться - закінчіть виконання та 
+        виведіть текст "Заповнення завершено" у заголовок другого рівня. 
+        Кожен новий квадрат повинен лягати в окреме, незайняте іншим квадратом місце.*/
+
+        /* 5. Створіть аплікацію, яка показує час, день та дату (орієнтуватись на https://time.is/uk/Ukraine)*/
+        let clocker = document.getElementById("insertClockHere");
+        setTimeout(() => clocker.style.color = "red", 100000);
+
+        function timer(){
+            let date = new Date();
+                hours = date.getHours();
+                minutes = date.getMinutes();
+                seconds = date.getSeconds();
+                days = date.getDay();
+                months = date.getMonth();
+                years = date.getFullYear();
+                dayWeek = date.getDay();
+
+                const daysOfWeek = ['понеділок', 'вівторок', 'середа', 'четвер', 'п\u02BCятниця', 'субота', 'неділя'];                
+                clocker.innerHTML = hours + ':' + minutes + ':' + seconds + "</br>" + days + '.' + months + '.' + years + "</br>" + daysOfWeek[dayWeek - 1];
+        }
+
+        function r(min, max){
+            return Math.floor((Math.random() * (max - min + 1) + min) /60) * 60;
+        }
+
+        function ran(min, max){
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function rColor(){
+            return `rgb(${ran(0, 254)},${ran(0, 255)},${ran(0, 255)})`;
+        }
+        
+        const leftTop = [];
+
+        setInterval(function(){   //все одно чогось додає квадрат там, де він вже був
+            let isLoop = true;
+            let count = 0;
+            console.time('count');
+            do{
+                const t = r(0, 590);
+                const l = r(0, 590);
+                const lt = `${l}-${t}`;
+                count++;
+
+                if(!leftTop.includes(lt)){
+                    const styles = `position: absolute;
+                        width : 60px; 
+                        height : 60px;
+                        top : ${t}px; 
+                        left : ${l}px;
+                        background-color: ${rColor()};`;
+
+                    const div = `<div style="${styles}"></div>`;
+
+                    document.body.insertAdjacentHTML('beforeend', div);
+                    leftTop.push(lt);
+                    isLoop = false;          
+                    console.timeEnd('count');
+                    console.log(count, lt);
+                }
+                if(leftTop.length === 100) break;
+            }while(isLoop);
+
+            timer();
+        }, 500);
+    </script>
+</body>
+</html>

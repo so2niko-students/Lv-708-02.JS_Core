@@ -1,0 +1,18 @@
+body{
+    display: flex;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+input{
+    font-size: 22pt;
+    padding: 10px;
+}
+
+[class*="info"]{
+    font-size: 10pt;
+    color: red;
+}

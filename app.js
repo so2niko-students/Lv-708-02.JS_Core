@@ -1,82 +1,89 @@
-//!Типи даних 
-/*
-Number
-String
-Boolean
-
-null
-undefined
-
-Object
-
-Symbol
-BigInt
-*/
-
-
-//? Копіювання по значенню
-let n1 = 100;
-let n2 = n1;
-n1 = 200;
-
-console.log(n1, n2);//200, 100
-
-//? Копіювання по посиланню
-const o1 = {
-    name : 'Nick'
+const DOM = {
+    inputs : {
+        login : document.querySelector('.in-login'),
+        password : document.querySelector('.in-password'),
+        email : document.querySelector('.in-email'),
+    },
+    info : {
+        login : document.querySelector('.login-info'),
+        password : document.querySelector('.pass-info'),
+        email : document.querySelector('.email-info'),
+    },
+    values : {
+        login : '',
+        password : '',
+        email : ''
+    }
 };
 
-const o2 = o1;
 
-o1.name = 'ne Nick';
+DOM.inputs.login.addEventListener('blur', (ev) => {
+    const infoMessage = `Login must contain at least 3 symbols`;
 
-console.log(o1, o2);
-console.log(o1 === o2);
+    const val = ev.target.value.trim();
+    const isInValidLen = val.length < 3;
 
-// let vs var
-var1 = 'hello';
-console.log(var1);
-var var1 = 'jsdklfjsdfds';
-console.log(var1);
+    if(isInValidLen){
+        DOM.info.login.textContent = infoMessage;
+        return;
+    }
 
-// city = 'jjj';
+    DOM.info.login.textContent = '';
+});
 
-// let city;
+const isControlKeys = (ev) => {
+    const controlKeysNames = ['Control', 'Alt', 'Shift', 'Tab', 'CapsLock', 'Meta', 'ContextMenu', 'Backspace'];
+    return controlKeysNames.includes(ev.key);
+}
 
-//let vs const
-const o3 = {
-    age : 100
-};
+const checkAndShowErrorEmail = (ev) => {
+    if(isControlKeys(ev)) return;
+    const rightLetters = 'qwertyuiopasdfghjklzxcvbnm.@1234567890+-_';
+    const infoMessage = `email address must containt these symbols: ${rightLetters}`;
+    const k = ev.key;
+    const isInvalidKey = !rightLetters.includes(k);
 
-o3.age = 34343;
-o3.n = 55;
-delete o3.age;
+    if(isInvalidKey){
+        DOM.info.email.textContent = infoMessage;
+        return;
+    } 
+}
 
-//Рядки
-// "..." '...' `...`
+const checkAndRemoveErrorKeyOnEmail = (ev) => {
+    if(isControlKeys(ev)) return;
+    const rightLetters = 'qwertyuiopasdfghjklzxcvbnm.@1234567890+-_';
+    const infoMessage = `email address must containt these symbols: ${rightLetters}`;
+    const k = ev.key;
+    const isInvalidKey = !rightLetters.includes(k);
 
-const r = "Hello, it is////////////////// a \"ROBOT\"";
-"Hello, it is a 'ROBOT'"
+    if(isInvalidKey){
+        DOM.info.email.textContent = infoMessage;
+        ev.preventDefault();
+        return;
+    } 
 
-console.log(r);
+    DOM.info.email.textContent = '';
+}
 
-//Шаблонні рядки
-//Template strings
+// DOM.inputs.email.addEventListener('keydown', checkAndShowErrorEmail);
+DOM.inputs.email.addEventListener('keydown', checkAndRemoveErrorKeyOnEmail);
 
-const greeting = `Hello ${ 5 * 6 - 9 + 22 }, my name is ${ o1.name }`;
+Object.entries(DOM.inputs).forEach(([key, element]) => {
+    element.addEventListener('input', () => {
+        DOM.values[key] = element.value;
+        
+        const dataInStr = JSON.stringify(DOM.values);
+        console.log(dataInStr);
+        localStorage.setItem('inputs', dataInStr);
+    });    
+});
 
-console.log(greeting);
-
-//Конкатенація 
-
-const s1 = 'Hell';
-const s2 = 'o';
-
-console.log(s1 + s2 + s1 + s2 + s1 + s1);
-console.log(`${ s1 + s2 }${ s2 }`);
-
-console.log('%cHello', 'color: red; padding: 25px; background-color: white;');
-
-// alert('Hello');
-// const n = prompt('Enter your name', 'Ivan');
-// const isHelp = confirm('Do you need a help?');
+(() => {
+    const dataInStr = localStorage.getItem('inputs');
+    if(dataInStr){
+        const data = JSON.parse(dataInStr);
+        Object.entries(data).forEach(([key, element]) => {
+            DOM.inputs[key].value = element;
+        });
+    }
+})();
