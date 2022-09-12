@@ -1,0 +1,7 @@
+.person{
+    position: fixed;
+    border: 1px solid gray;
+    border-radius: 50%;
+    transition: top 1s, left 1s;
+    opacity: 50%;
+}
