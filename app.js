@@ -1,82 +1,61 @@
-//!Типи даних 
-/*
-Number
-String
-Boolean
+const getHolidaysURL = (code = 'UA', year = 2022) => {
+    return `https://date.nager.at/api/v3/publicholidays/${ year }/${ code }`;
+}
 
-null
-undefined
+const isValidDate = date => {
+    const now = Date.now();
+    const then = new Date(date);
 
-Object
+    if(now > then) return false;
 
-Symbol
-BigInt
-*/
+    return /^\d{4}-\d{2}-\d{2}$/.test(date);
+}
 
+const isValidCountry = country => {
+    if(country.length != 2) return false;
+    if(!/[a-z]{2}/i.test(country)) return false;
 
-//? Копіювання по значенню
-let n1 = 100;
-let n2 = n1;
-n1 = 200;
+    return true;
+}   
 
-console.log(n1, n2);//200, 100
-
-//? Копіювання по посиланню
-const o1 = {
-    name : 'Nick'
+const DOM = {
+    inpDate : document.querySelector('.inp-date'),
+    inpFrom : document.querySelector('.inp-from'),
+    inpTo : document.querySelector('.inp-to'),
+    btnCount : document.querySelector('.btn-count'),
+    outAnswer : document.querySelector('.answer')
 };
 
-const o2 = o1;
+// fetch(getHolidaysURL()).then(r => r.json()).then(console.log);
 
-o1.name = 'ne Nick';
+const showAnswer = (isHoliday) => {
+    const price = isHoliday ? '+50' : '0';
+    DOM.outAnswer.innerText = `Your price increase on ${ price }%`;
+}
 
-console.log(o1, o2);
-console.log(o1 === o2);
 
-// let vs var
-var1 = 'hello';
-console.log(var1);
-var var1 = 'jsdklfjsdfds';
-console.log(var1);
+DOM.btnCount.onclick = () => {
+    const date = DOM.inpDate.value;
+    const from = DOM.inpFrom.value;
+    const to = DOM.inpTo.value;
 
-// city = 'jjj';
+    const isValidD = isValidDate(date);
+    const isValidCountryFrom = isValidCountry(from);
+    const isValidCountryTo = isValidCountry(to);
+    console.log(date, from , to);
+    console.log(isValidD, isValidCountryFrom, isValidCountryTo);
+    if(isValidD && isValidCountryFrom && isValidCountryTo){
+        const year = date.split('-')[0];
+        const fFrom = fetch(getHolidaysURL(from, year)).then(r => r.json());
+        const fTo = fetch(getHolidaysURL(to, year)).then(r => r.json());
 
-// let city;
+        Promise.all([fFrom, fTo]).then(values => {
+            const dates = values.flat().map(el => el.date);
+            console.log(dates);
+            const isHoliday = dates.includes(date);
 
-//let vs const
-const o3 = {
-    age : 100
-};
+            showAnswer(isHoliday);
+        });
+    }
+}
 
-o3.age = 34343;
-o3.n = 55;
-delete o3.age;
-
-//Рядки
-// "..." '...' `...`
-
-const r = "Hello, it is////////////////// a \"ROBOT\"";
-"Hello, it is a 'ROBOT'"
-
-console.log(r);
-
-//Шаблонні рядки
-//Template strings
-
-const greeting = `Hello ${ 5 * 6 - 9 + 22 }, my name is ${ o1.name }`;
-
-console.log(greeting);
-
-//Конкатенація 
-
-const s1 = 'Hell';
-const s2 = 'o';
-
-console.log(s1 + s2 + s1 + s2 + s1 + s1);
-console.log(`${ s1 + s2 }${ s2 }`);
-
-console.log('%cHello', 'color: red; padding: 25px; background-color: white;');
-
-// alert('Hello');
-// const n = prompt('Enter your name', 'Ivan');
-// const isHelp = confirm('Do you need a help?');
